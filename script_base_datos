@@ -1,0 +1,17 @@
+Create Database Agenda;
+
+Use Agenda;
+
+Create Table Persona(
+	Id VARCHAR(10) NOT NULL,
+	Nombre VARCHAR(30) NOT NULL,
+    Celular VARCHAR(10) NOT NULL,
+    Correo VARCHAR(50) NOT NULL
+);
+
+Insert Into Persona (Id, Nombre, Celular, Correo) values ('1751354422', 'Néstor Chumania', '0991155259', 'nestor.chumania@epn.edu.ec');
+Insert Into Persona (Id, Nombre, Celular, Correo) values ('1752415614', 'Danny Vinueza',   '0991151651', 'danny.vinueza@epn.edu.ec');
+Insert Into Persona (Id, Nombre, Celular, Correo) values ('1756531655', 'Daniel Quishpe',  '0996516559', 'daniel.quishpe@epn.edu.ec');
+Insert Into Persona (Id, Nombre, Celular, Correo) values ('1751651515', 'Maria Lopez',     '0951125259', 'maria.lopez@epn.edu.ec');
+Insert Into Persona (Id, Nombre, Celular, Correo) values ('1751356516', 'José Panchi',     '0991126626', 'jose.panchi@epn.edu.ec');
+Insert Into Persona (Id, Nombre, Celular, Correo) values ('1751365651', 'Katty Ortiz',     '0931555259', 'katty.ortiz@epn.edu.ec');
