@@ -4,38 +4,39 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+
 public class agenda {
+    PreparedStatement ps;
     private JPanel pagendar;
     private JLabel titulo;
     private JTextField cedula;
     private JTextField nombre;
-    private JTextField apellido;
+    private JTextField celular;
     private JTextField email;
     private JButton buscarB;
     private JButton actualizarB;
 
 
     public agenda() {
-        nombre.setEnabled(false);
-        apellido.setEnabled(false);
+        /*nombre.setEnabled(false);
+        celular.setEnabled(false);
         email.setEnabled(false);
-        actualizarB.setEnabled(false);
+        actualizarB.setEnabled(false);*/
         buscarB.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Connection con;/*
+                Connection con;
                 try{
 
                     con = getConection();
-                    ps = con.prepareStatement("INSERT INTO registro (ID, NOMBRE, CELULAR, CORREO, DIRECCION, EDAD) VALUES (?, ?, ?, ?, ?, ?);");
-                    ps.setString(1, TFid.getText());
-                    ps.setString(2, TFnombre.getText());
-                    ps.setString(3, TFcelular.getText());
-                    ps.setString(4,TFcorreo.getText());
-                    ps.setString(5,TFdireccion.getText());
-                    ps.setString(6, TFedad.getText());
+                    ps = con.prepareStatement("INSERT INTO persona (Id, Nombre, Celular, Correo) VALUES (?, ?, ?, ?);");
+                    ps.setString(1, cedula.getText());
+                    ps.setString(2, nombre.getText());
+                    ps.setString(3, celular.getText());
+                    ps.setString(4, email.getText());
                     System.out.println(ps);//Imprime para ver los datos ingresados por consola
 
                     int res = ps.executeUpdate();
@@ -47,14 +48,14 @@ public class agenda {
                     con.close();
                 }catch(HeadlessException | SQLException f){
                     System.err.println(f);
-                }*/
+                }
             }
         });
     }
 
     public static Connection getConection(){
         Connection con = null;
-        String base = "formulario";
+        String base = "agenda";
         String url = "jdbc:mysql://localhost/" + base;
         String user = "root";
         String password = "1234";
