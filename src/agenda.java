@@ -2,10 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 
 public class agenda {
@@ -21,18 +18,58 @@ public class agenda {
 
 
     public agenda() {
-        /*nombre.setEnabled(false);
+        nombre.setEnabled(false);
         celular.setEnabled(false);
         email.setEnabled(false);
-        actualizarB.setEnabled(false);*/
+        actualizarB.setEnabled(false);
         buscarB.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Connection con;
                 try{
-
+                    String cedulaIn;
+                    cedulaIn = cedula.getText();
+                    System.out.println(cedulaIn);
                     con = getConection();
-                    ps = con.prepareStatement("INSERT INTO persona (Id, Nombre, Celular, Correo) VALUES (?, ?, ?, ?);");
+                    String query = "select * from persona;";// WHERE Id = " + cedulaIn + ";";
+                    Statement s = con.createStatement();
+                    ResultSet rs = s.executeQuery(query);
+                    System.out.println(rs);
+
+                    while(rs.next()){
+                        if(cedulaIn.equals(rs.getString(1))){
+                            nombre.setText(rs.getString(2));
+                            celular.setText(rs.getString(3));
+                            email.setText(rs.getString(4));
+
+                            System.out.println(rs.getString(1) + " " +
+                                    rs.getString(2) + " " +
+                                    rs.getString(3) + " " +
+                                    rs.getString(4));
+                            nombre.setEnabled(true);
+                            celular.setEnabled(true);
+                            email.setEnabled(true);
+                            actualizarB.setEnabled(true);
+                            break;
+                        }else{
+                            System.out.println("Persona no encontrada");
+                            break;
+                        }
+                    }
+                    con.close();
+                }catch(HeadlessException | SQLException f){
+                    System.err.println(f);
+                }
+            }
+        });
+        actualizarB.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Connection con;
+
+                try{
+                    con = getConection();
+                    ps = con.prepareStatement("UPDATE persona SET id = ?, nombre = ?, celular = ?, correo = ? WHERE id ="+cedula.getText() );
                     ps.setString(1, cedula.getText());
                     ps.setString(2, nombre.getText());
                     ps.setString(3, celular.getText());
@@ -41,9 +78,9 @@ public class agenda {
 
                     int res = ps.executeUpdate();
                     if(res > 0){
-                        JOptionPane.showMessageDialog(null, "Persona Guardada");
+                        JOptionPane.showMessageDialog(null, "Actualizacion exitosa ");
                     }else{
-                        JOptionPane.showMessageDialog(null,"Error al guardar");
+                        JOptionPane.showMessageDialog(null,"Error al actualizar");
                     }
                     con.close();
                 }catch(HeadlessException | SQLException f){
